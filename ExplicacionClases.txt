@@ -1,0 +1,74 @@
+Ejercicio: Sistema de Control para una Fábrica de Duraznos
+
+La fábrica de duraznos está ubicada en una zona agrícola donde los duraznos se cosechan en distintas épocas del año. Una vez que llegan a la fábrica, estos duraznos pasan por varias etapas de procesamiento, según su calidad y tamaño, para convertirse en productos como mermeladas, jugos o conservas. La fábrica necesita un sistema para:
+
+Registrar los duraznos que ingresan: Cada durazno debe ser clasificado por su tamaño, peso y calidad, ya que estos datos afectan el tipo de producto final al que puede ser destinado.
+Gestionar el proceso de producción: Una vez que se recogen suficientes duraznos de una calidad específica, pueden ser procesados en un tipo de producto, como mermelada o jugo.
+Controlar el inventario de productos terminados: Después de producirse, cada producto terminado debe registrarse en el inventario para llevar control de la disponibilidad de los productos finales para su venta.
+El sistema debe ser capaz de recibir nuevos duraznos, procesarlos en productos finales y administrar el inventario de esos productos. Con esto, se espera mejorar la eficiencia del proceso y llevar un registro detallado de los recursos y productos de la fábrica.
+
+  Clases a Implementar  
+Clase Durazno
+La clase Durazno representa cada durazno individual que ingresa a la fábrica. Cada durazno tiene características específicas de peso, tamaño y calidad, lo cual permite clasificarlos y definir si son adecuados para ciertos tipos de productos.
+
+Atributos:
+
+int id: Identificador único de cada durazno. Facilita el seguimiento de cada durazno individual.
+double peso: Peso del durazno en gramos. Esto es importante para calcular el costo y el peso total del producto final.
+String tamaño: Clasificación del tamaño del durazno, que puede ser "pequeño", "mediano" o "grande". El tamaño puede influir en el tipo de producto al que el durazno es destinado.
+String calidad: Indica la calidad del durazno, que puede ser "alta", "media" o "baja". La calidad afecta el costo y el tipo de productos finales a los que el durazno puede destinarse.
+
+Métodos:
+
+Durazno(int id, double peso, String tamaño, String calidad): Constructor que inicializa el durazno con sus atributos básicos.
+int getId(), double getPeso(), String getTamaño(), String getCalidad(): Métodos de acceso (getters) para obtener los valores de cada atributo.
+double calcularCosto(): Calcula el costo de cada durazno en función de su peso y calidad. Los duraznos de mayor calidad tienen un costo adicional.
+void mostrarDetalles(): Imprime los detalles del durazno, como el ID, peso, tamaño, calidad y costo. Útil para revisar las características de cada durazno.
+
+Clase Producto
+La clase Producto representa un producto final obtenido del procesamiento de los duraznos. Los productos pueden ser de varios tipos y tienen un precio que depende de los duraznos usados.
+
+Atributos:
+
+int id: Identificador único para cada producto terminado, lo que permite un control detallado del inventario.
+String tipo: Tipo de producto, como "mermelada", "jugo" o "conserva". Permite clasificar los productos terminados.
+double peso: Peso total del producto en gramos, calculado a partir de los duraznos procesados.
+double precio: Precio del producto final, calculado en base al costo de los duraznos utilizados y un margen de ganancia.
+
+Métodos:
+
+Producto(int id, String tipo, double peso, double precio): Constructor que inicializa el producto con su ID, tipo, peso y precio.
+int getId(), String getTipo(), double getPeso(), double getPrecio(): Métodos de acceso para obtener los valores de cada atributo.
+void mostrarDetalles(): Imprime los detalles del producto, incluyendo el tipo, peso y precio. Facilita la visualización del inventario de productos terminados.
+
+Clase Inventario
+La clase Inventario administra los productos terminados. Mantiene una lista de productos y proporciona métodos para añadir, listar y buscar productos en el inventario.
+
+Atributos:
+
+ArrayList<Producto> productos: Lista que almacena todos los productos terminados. Utilizamos un ArrayList para facilitar la adición y búsqueda de productos.
+
+Métodos:
+
+Inventario(): Constructor que inicializa la lista de productos vacía.
+void agregarProducto(Producto producto): Añade un producto terminado al inventario.
+void listarProductos(): Imprime todos los productos en el inventario.
+Producto buscarProducto(int id): Busca un producto en el inventario según su ID. Retorna el producto si se encuentra; de lo contrario, retorna null.
+
+Clase Fabrica
+La clase Fabrica es el núcleo del sistema, controlando la entrada de duraznos, el procesamiento para generar productos finales y la administración del inventario de productos.
+
+Atributos:
+
+ArrayList<Durazno> duraznos: Lista de duraznos que ingresan a la fábrica y que aún no han sido procesados.
+Inventario inventario: Instancia de la clase Inventario, que gestiona el almacenamiento y consulta de los productos terminados.
+int productoIdCounter: Contador de ID para los productos, garantizando que cada producto tenga un ID único.
+
+Métodos:
+
+Fabrica(): Constructor que inicializa la lista de duraznos y el inventario.
+void ingresarDurazno(Durazno durazno): Añade un durazno a la lista de duraznos en la fábrica.
+void procesarDuraznos(String tipoProducto): Procesa los duraznos de la lista para generar un producto final. Calcula el peso y el costo total de los duraznos procesados y crea un producto con un margen de ganancia. Añade el producto al inventario y vacía la lista de duraznos.
+void mostrarInventario(): Llama al método listarProductos() del inventario para mostrar el inventario actual de productos terminados.
+
+Este conjunto de clases simula una fábrica de procesamiento de duraznos, permitiendo ingresar materia prima, procesarla en productos finales y administrar el inventario de dichos productos. Cada clase y método desempeña una función específica en el flujo del sistema, facilitando el control y monitoreo de la producción.
