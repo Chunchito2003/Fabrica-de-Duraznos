@@ -15,7 +15,8 @@ public class Inventario {
         productos.add(producto);
     }
 
-    //listar
+    /*
+    //listar en la terminal
     public void ListarProductos() {
         int contadorMermelada = 0;
         int contadorJugo = 0;
@@ -36,8 +37,9 @@ public class Inventario {
         System.out.println("Jugo: " + contadorJugo);
         System.out.println("Conserva: " + contadorConserva);
     }
+    */
 
-    //Busca un producto en el inventario según su ID. Retorna el
+    /*/Busca un producto en el inventario según su ID. Retorna el
     //producto si se encuentra; de lo contrario, retorna null.
     public Producto buscarProducto(int id) {
         for (Producto producto : productos) {
@@ -46,6 +48,17 @@ public class Inventario {
             }
         }
         return null;
+    }*/
+    // Devuelve la cantidad de productos de un tipo especifico en el inventario
+    public int contarProductosPorTipo(String tipo) {
+        int contador = 0;
+        for (Producto producto : productos) {
+            if (producto.getTipo().equalsIgnoreCase(tipo)) {
+                contador++;
+            }
+        }
+        return contador;
     }
+
 
 }

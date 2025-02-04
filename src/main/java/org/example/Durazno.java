@@ -5,51 +5,17 @@ public class Durazno {
     private double peso;
     private String tamano;
     private String calidad;
-    // Variable estatica para generar IDs únicos
-    private static int contadorId = 0;
+
 
     //constructor
     public Durazno(double peso, String tamano, String calidad) {
-        this.id = generarIdUnico();
         this.peso = peso;
         this.tamano = tamano;
         this.calidad = calidad;
-    }
-    //metodo paara automatizar los id
-    private static int generarIdUnico() {
-        return ++contadorId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public double getPeso() {
         return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
-    }
-
-    public String getTamano() {
-        return tamano;
-    }
-
-    public void setTamano(String tamano) {
-        this.tamano = tamano;
-    }
-
-    public String getCalidad() {
-        return calidad;
-    }
-
-    public void setCalidad(String calidad) {
-        this.calidad = calidad;
     }
 
     //metodos
@@ -57,6 +23,7 @@ public class Durazno {
         double costoBase = 2.0;
         double multiplicadorTamano = 0.0;
         double ajusteCalidad = 0.0;
+
 
         // Determinando multiplicador según el tamaño
         switch (tamano) {

@@ -1,16 +1,27 @@
 package org.example;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fabrica {
     private ArrayList<Durazno> duraznos;
     private final Inventario inventario;
+    private Map<String, Double> preciosAcumulados; // Almacena el precio acumulado por tipo de producto
+
     private static int productoIdCounter = 0; // Variable estatica para generar IDs unicos
 
     // Constructor
     public Fabrica() {
         duraznos = new ArrayList<>();
         this.inventario = new Inventario();
+        this.preciosAcumulados = new HashMap<>();
+
+        // Inicializar precios en 0 para cada tipo de producto
+        preciosAcumulados.put("jugo", 0.0);
+        preciosAcumulados.put("mermelada", 0.0);
+        preciosAcumulados.put("conserva", 0.0);
     }
 
     // Metodo para automatizar los IDs
@@ -35,18 +46,19 @@ public class Fabrica {
             precioTotal += durazno.calcularCosto();
         }
 
-        precioTotal *= margenGanancia; // Aplicar margen de ganancia
+        precioTotal *= margenGanancia;
 
-        // Crear el nuevo producto y agregarlo al inventario
+        // Asegurar que el precio se acumule correctamente
+        preciosAcumulados.put(tipoProducto, preciosAcumulados.get(tipoProducto) + precioTotal);
+
         Producto producto = new Producto(generarIdUnico(), pesoTotal, precioTotal, tipoProducto);
         inventario.agregarProducto(producto);
 
-        // Eliminar los duraznos utilizados
-        if (cantidadNecesaria > 0 && cantidadNecesaria <= duraznos.size()) {
-            duraznos.subList(0, cantidadNecesaria).clear();
-        } else {
-            System.out.println("Cantidad necesaria invalida o insuficientes duraznos.");
-        }
+
+        //eliminar los duraznos hechos
+        duraznos.subList(0, cantidadNecesaria).clear();
+        System.out.println("Precio acumulado actualizado para " + tipoProducto + ": $" + preciosAcumulados.get(tipoProducto));
+
     }
 
     // Procesar duraznos según tipo de producto
@@ -76,13 +88,24 @@ public class Fabrica {
         if (duraznos.size() >= cantidadNecesaria) {
             procesarYGenerarProducto(tipoProducto, margenGanancia, cantidadNecesaria);
         } else {
-            System.out.println("No hay suficientes duraznos para procesar " + tipoProducto +
-                    ". Cantidad actual: " + duraznos.size() + ", se necesitan: " + cantidadNecesaria);
+            JOptionPane.showMessageDialog(null,
+                    "No hay suficientes duraznos para procesar " + tipoProducto +
+                            ".\nCantidad actual: " + duraznos.size() + ", se necesitan: " + cantidadNecesaria,
+                    "Error de produccion", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     // Mostrar inventario
-    public void mostrarInventario() {
-        inventario.ListarProductos();
+    public int getCantidadProductos(String tipoProducto) {
+        return inventario.contarProductosPorTipo(tipoProducto);
     }
+
+    public int getCantidadDuraznos() {
+        return duraznos.size();
+    }
+
+    public double getPrecioAcumulado(String tipoProducto) {
+        return preciosAcumulados.getOrDefault(tipoProducto, 0.0);
+    }
+
 }
